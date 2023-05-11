@@ -19,7 +19,7 @@ public class NumberService {
     public Map<String, Integer> getNextNumber(Integer categoryCode) throws InterruptedException {
         Numbers number = numberRepository.findByCategoryCode(categoryCode);
         Integer oldValue = number.getValue();
-        Integer newValue = getNewValue(oldValue);
+        Integer newValue = calculateNextNumber(oldValue);
         Numbers newNumber = new Numbers();
         newNumber.setCategoryCode(categoryCode);
         newNumber.setValue(newValue);
@@ -31,20 +31,33 @@ public class NumberService {
     }
 
 
-    private int getNewValue(int value) throws InterruptedException {
-        while (!isSumOfDigitsOne(value)) {
-            Thread.sleep(1000);
-            value++;
-        }
-        return value;
+    private Integer calculateNextNumber(Integer oldValue) {
+    	int n = oldValue+1;
+    	int sum;
+    	int temp;
+    	boolean flag =false;
+    	while(!flag) {
+    		sum=0;
+    		temp=n;
+    		while(n!=0) {
+    			sum+=n%10;
+    			n/=10;
+    			if(sum>9) {
+    				n=sum;
+    				sum = 0;
+    				continue;
+    			}
+    		}
+    		if(sum==1) {
+    			flag =true;
+    			return temp;
+    		}
+    		else {
+    			temp++;
+    			n = temp;
+    		}
+    	}
+    	return n;
     }
-
-    private boolean isSumOfDigitsOne(int value) {
-        int sum = 0;
-        while (value > 0) {
-            sum += value % 10;
-            value /= 10;
-        }
-        return sum == 1;
-    }
+    
 }
