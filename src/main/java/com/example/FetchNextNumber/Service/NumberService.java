@@ -18,7 +18,7 @@ public class NumberService {
 
     public Map<String, Integer> getNextNumber(Integer categoryCode) throws InterruptedException {
         Numbers number = numberRepository.findByCategoryCode(categoryCode);
-        Integer oldValue = Optional.ofNullable(number.getValue()).get();
+        Integer oldValue = number.getValue();
         Integer newValue = getNewValue(oldValue);
         Numbers newNumber = new Numbers();
         newNumber.setCategoryCode(categoryCode);

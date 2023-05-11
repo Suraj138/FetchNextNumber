@@ -12,7 +12,6 @@ import javax.persistence.Table;
 public class Numbers {
     
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "category_code")
     private Integer categoryCode;
     
@@ -34,8 +33,8 @@ public class Numbers {
         return categoryCode;
     }
     
-    public void setCategoryCode(Integer categoryCode) {
-        this.categoryCode = categoryCode;
+    public void setCategoryCode(Integer categoryCode2) {
+        this.categoryCode = categoryCode2;
     }
     
     public Integer getValue() {
