@@ -9,32 +9,32 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "numbers")
-public class Number {
+public class Numbers {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "category_code")
-    private String categoryCode;
+    private Integer categoryCode;
     
     @Column(name = "value")
     private Integer value;
     
     // constructors, getters, and setters
     
-    public Number() {
+    public Numbers() {
     }
 
-    public Number(String categoryCode, Integer value) {
+    public Numbers(Integer categoryCode, Integer value) {
         this.categoryCode = categoryCode;
         this.value = value;
     }
     
     
-    public String getCategoryCode() {
+    public Integer getCategoryCode() {
         return categoryCode;
     }
     
-    public void setCategoryCode(String categoryCode) {
+    public void setCategoryCode(Integer categoryCode) {
         this.categoryCode = categoryCode;
     }
     

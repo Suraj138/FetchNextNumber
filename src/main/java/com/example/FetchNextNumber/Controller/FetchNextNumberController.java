@@ -21,13 +21,11 @@ public class FetchNextNumberController {
 
     @PostMapping
     public ResponseEntity<Map<String, Integer>> fetchNextNumber(@RequestBody Map<String, String> request) throws InterruptedException {
-        String categoryCode = request.get("CategoryCode");
-        int fetchedValue = fetchNextNumberService.fetchNumber(categoryCode);
-        int nextValue = fetchNextNumberService.calculateNextNumber(fetchedValue);
-        numberService.updateNumber(categoryCode, nextValue);
+        Integer categoryCode = Integer.parseInt(request.get("CategoryCode"));
+        Map<String, Integer> initialResponse = numberService.getNextNumber(categoryCode);
         Map<String, Integer> response = new HashMap<>();
-        response.put("OldValue", fetchedValue);
-        response.put("NewValue", nextValue);
+        response.put("OldValue", initialResponse.get("oldValue"));
+        response.put("NewValue", initialResponse.get("newValue"));
         Thread.sleep(5000); // introducing a delay of 5 seconds
         return ResponseEntity.ok(response);
     }

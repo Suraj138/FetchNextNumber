@@ -1,8 +1,13 @@
 package com.example.FetchNextNumber.Service;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.example.FetchNextNumber.Model.Numbers;
 import com.example.FetchNextNumber.Repository.NumberRepository;
 
 @Service
@@ -11,11 +16,11 @@ public class NumberService {
     @Autowired
     private NumberRepository numberRepository;
 
-    public Map<String, Integer> getNextNumber(String categoryCode) throws InterruptedException {
-        Number number = numberRepository.findByCategoryCode(categoryCode);
-        int oldValue = number != null ? number.getValue() : 0;
-        int newValue = getNewValue(oldValue + 1);
-        Number newNumber = new Number();
+    public Map<String, Integer> getNextNumber(Integer categoryCode) throws InterruptedException {
+        Numbers number = numberRepository.findByCategoryCode(categoryCode);
+        Integer oldValue = Optional.ofNullable(number.getValue()).get();
+        Integer newValue = getNewValue(oldValue);
+        Numbers newNumber = new Numbers();
         newNumber.setCategoryCode(categoryCode);
         newNumber.setValue(newValue);
         numberRepository.save(newNumber);
@@ -24,6 +29,7 @@ public class NumberService {
         result.put("newValue", newValue);
         return result;
     }
+
 
     private int getNewValue(int value) throws InterruptedException {
         while (!isSumOfDigitsOne(value)) {
