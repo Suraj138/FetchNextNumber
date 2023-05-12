@@ -1,0 +1,19 @@
+=> FetchNextNumber is a Spring Boot application using JPA repository to communicate with the database for CRUD operations. We are using Postman for sending request to the api and get response.
+
+=> We have created various packages containing classes for various purpose which are:
+  1. com.example.FetchNextNumber- This package contains the runnable class of the application.
+  2. com.example.FetchNextNumber.Controller- This package contains controller class FetchNextNumberController which fetch the request send from post an process the category code send as parameter to calculate next number and then returns the response back to postman.
+  3. com.example.FetchNextNumber.Model- This package contains the model class Numbers which maps with the table 'Number' in mysql database
+  4. com.example.FetchNextNumber.Repository- This package contains NumberRepository interface which extends JpaRepository to perform CRUD operations on database. 
+  5. com.example.FetchNextNumber.Service- This package contains the service class, NumberService which does all the processing of calculating the next number and send the result to controller class as HashMap.
+  
+=> To run the application we run the FetchNextNumberApplication class as Spring boot app and once the application is started on Tomcat server we can send the request to api with the url localhost:7777/FetchNextNumber and request body as 
+{
+    "CategoryCode" : "2"
+}
+
+=> Then we get the response from api with old value and new value.
+{
+    "OldValue": 73,
+    "NewValue": 82
+}
